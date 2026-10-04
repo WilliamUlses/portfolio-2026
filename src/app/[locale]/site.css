@@ -1,0 +1,289 @@
+/* Storefront base styles scoped to <html class="site"> */
+
+.site {
+  --font-sans: var(--font-hanken), "Hanken Grotesk", system-ui, sans-serif;
+
+  color-scheme: light;
+  --bg: #f2f1ec;
+  --fg: #1e2bff;
+  --fg-60: rgb(30 43 255 / 0.62);
+  --fg-80: rgb(30 43 255 / 0.8);
+  --fg-15: rgb(30 43 255 / 0.18);
+  --accent: #1e2bff;
+  --hero-bg: #1e2bff;
+  --on-hero: #f2f1ec;
+  --on-hero-60: rgb(242 241 236 / 0.8);
+  --on-hero-25: rgb(242 241 236 / 0.25);
+  --card-bg: #1e2bff;
+  --on-card: #f2f1ec;
+  --footer-bg: #1e2bff;
+  --on-footer: #f2f1ec;
+  --on-footer-60: rgb(242 241 236 / 0.8);
+  --on-footer-25: rgb(242 241 236 / 0.25);
+  /* Liquid glass menu tokens */
+  --glass-bg: rgb(255 255 255 / 0.82);
+  --glass-fg: #1e2bff;
+  --glass-border: rgb(255 255 255 / 0.75);
+  --glass-edge: rgb(30 43 255 / 0.14);
+  --glass-hover: rgb(30 43 255 / 0.08);
+  --glass-active: rgb(30 43 255 / 0.14);
+  --glass-shadow: rgb(22 30 180 / 0.22);
+
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Dark mode : Titane Minéral chaud avec texture de verre et accents cobalt */
+.site.dark,
+.site[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e0e12;
+  --fg: #e8e7e1;
+  --fg-60: #989792;
+  --fg-80: rgb(232 231 225 / 0.88);
+  --fg-15: rgb(232 231 225 / 0.14);
+  --accent: #5c6eff;
+  --hero-bg: #0c0e18;
+  --on-hero: #f4f5f8;
+  --on-hero-60: rgb(244 245 248 / 0.72);
+  --on-hero-25: rgb(255 255 255 / 0.14);
+  --card-bg: #111424;
+  --on-card: #f2f1ec;
+  --footer-bg: #0b0f2e;
+  --on-footer: #f2f1ec;
+  --on-footer-60: rgb(242 241 236 / 0.75);
+  --on-footer-25: rgb(242 241 236 / 0.15);
+
+  --glass-bg: rgb(18 18 24 / 0.75);
+  --glass-fg: #f2f1ec;
+  --glass-border: rgb(255 255 255 / 0.15);
+  --glass-edge: rgb(92 110 255 / 0.35);
+  --glass-hover: rgb(255 255 255 / 0.08);
+  --glass-active: rgb(92 110 255 / 0.25);
+  --glass-shadow: rgb(0 0 0 / 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+  .site:not([data-theme="light"]):not(.light) {
+    color-scheme: dark;
+    --bg: #0e0e12;
+    --fg: #e8e7e1;
+    --fg-60: #989792;
+    --fg-80: rgb(232 231 225 / 0.88);
+    --fg-15: rgb(232 231 225 / 0.14);
+    --accent: #5c6eff;
+    --hero-bg: #0c0e18;
+    --on-hero: #f4f5f8;
+    --on-hero-60: rgb(244 245 248 / 0.72);
+    --on-hero-25: rgb(255 255 255 / 0.14);
+    --card-bg: #111424;
+    --on-card: #f2f1ec;
+    --footer-bg: #0b0f2e;
+    --on-footer: #f2f1ec;
+    --on-footer-60: rgb(242 241 236 / 0.75);
+    --on-footer-25: rgb(242 241 236 / 0.15);
+
+    --glass-bg: rgb(18 18 24 / 0.75);
+    --glass-fg: #f2f1ec;
+    --glass-border: rgb(255 255 255 / 0.15);
+    --glass-edge: rgb(92 110 255 / 0.35);
+    --glass-hover: rgb(255 255 255 / 0.08);
+    --glass-active: rgb(92 110 255 / 0.25);
+    --glass-shadow: rgb(0 0 0 / 0.7);
+  }
+}
+
+.site ::selection {
+  background: var(--color-cobalt);
+  color: var(--color-paper);
+}
+
+.site.dark ::selection,
+.site[data-theme="dark"] ::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .site:not([data-theme="light"]):not(.light) ::selection {
+    background: var(--accent);
+    color: #ffffff;
+  }
+}
+
+.site,
+.site body {
+  transition:
+    background-color 0.5s var(--ease-out),
+    color 0.5s var(--ease-out);
+}
+
+.site body {
+  background: var(--bg);
+}
+
+/* Caustiques saphir/titane & grain argentique ultra-fin (120px fixe, haute fréquence, 100% net sur Retina) */
+.site.dark body,
+.site[data-theme="dark"] body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(
+      ellipse 90% 50% at 50% 0%,
+      rgb(30 43 255 / 0.12),
+      transparent 75%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 90% 50%,
+      rgb(159 243 255 / 0.04),
+      transparent 60%
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.25' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-repeat: repeat;
+  background-size:
+    auto,
+    auto,
+    120px 120px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .site:not([data-theme="light"]):not(.light) body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(
+        ellipse 90% 50% at 50% 0%,
+        rgb(30 43 255 / 0.12),
+        transparent 75%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 90% 50%,
+        rgb(159 243 255 / 0.04),
+        transparent 60%
+      ),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.25' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-repeat: repeat;
+    background-size:
+      auto,
+      auto,
+      120px 120px;
+  }
+}
+
+/* Hide native scrollbars when JS is enabled (scroll progress shown via cursor/monogram) */
+.site[data-js] {
+  scrollbar-width: none;
+}
+.site[data-js]::-webkit-scrollbar {
+  display: none;
+}
+
+/* Prevent scroll while preloader is active */
+.site[data-loader] {
+  overflow: hidden;
+}
+
+.site a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Keyboard focus rings */
+.site :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.site [data-bg="dark"] :focus-visible {
+  outline-color: var(--color-paper);
+}
+
+/* Skip link */
+.site .skip {
+  position: fixed;
+  left: var(--pad);
+  top: var(--pad);
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--color-cobalt);
+  color: var(--color-paper);
+  font-size: var(--text-label);
+  transform: translateY(-200%);
+}
+.site .skip:focus-visible {
+  transform: none;
+}
+
+/* Variable font presets */
+.site .v-thin {
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+}
+.site .v-fat {
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+.site .v-hair {
+  font-variation-settings:
+    "wdth" 100,
+    "wght" 150;
+}
+.site .v-anim {
+  transition: font-variation-settings 0.7s var(--ease-out);
+}
+
+/* Screen-reader accessible hidden text */
+.site .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Background depth and blur effect when liquid glass modal is open */
+main,
+footer,
+header,
+#contenu,
+#top > *:not(nav):not([role="dialog"]) {
+  transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[data-drawer-open="true"] main,
+html[data-drawer-open="true"] footer,
+html[data-drawer-open="true"] header,
+html[data-drawer-open="true"] #contenu,
+html[data-drawer-open="true"] #top > *:not(nav):not([role="dialog"]),
+html[data-modal-open="true"] main,
+html[data-modal-open="true"] footer,
+html[data-modal-open="true"] header,
+html[data-modal-open="true"] #contenu,
+html[data-modal-open="true"] #top > *:not(nav):not([role="dialog"]) {
+  filter: blur(22px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .site *,
+  .site *::before,
+  .site *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: overrides all nested component transitions */
+    transition-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: overrides all nested component animations */
+    animation-duration: 0.01ms !important;
+  }
+}

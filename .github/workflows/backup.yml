@@ -1,0 +1,62 @@
+# Weekly backup of the production database.
+# Every Monday at 03:00 UTC: pg_dump → GPG symmetric encryption (AES-256)
+# → GitHub Actions artifact (retained 90 days).
+#
+# Secrets required (repo Settings → Secrets and variables → Actions):
+#   PROD_DATABASE_URL_UNPOOLED  – direct connection string for the Neon `main` branch
+#                                 (a read-only role is recommended)
+#   BACKUP_PASSPHRASE           – strong passphrase (≥ 20 chars) stored in your password manager
+name: Backup
+
+on:
+  schedule:
+    # Chaque lundi à 03:00 UTC.
+    - cron: "0 3 * * 1"
+  # Déclenchement manuel pour tester.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends postgresql-client
+
+      - name: Dump production database
+        env:
+          PGPASSFILE: /dev/null
+        run: |
+          FILENAME="portfolio_prod_$(date -u +%Y%m%d_%H%M%S).sql"
+          pg_dump \
+            --no-password \
+            --format=custom \
+            --no-acl \
+            --no-owner \
+            "${{ secrets.PROD_DATABASE_URL_UNPOOLED }}" \
+            --file="${FILENAME}"
+          echo "BACKUP_FILE=${FILENAME}" >> "$GITHUB_ENV"
+
+      - name: Encrypt dump with GPG
+        run: |
+          gpg --batch \
+              --yes \
+              --symmetric \
+              --cipher-algo AES256 \
+              --passphrase "${{ secrets.BACKUP_PASSPHRASE }}" \
+              --output "${BACKUP_FILE}.gpg" \
+              "${BACKUP_FILE}"
+          # Supprimer l'archive non chiffrée immédiatement.
+          rm "${BACKUP_FILE}"
+
+      - name: Upload encrypted backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: "db-backup-${{ github.run_id }}"
+          path: "*.gpg"
+          retention-days: 90
+          if-no-files-found: error

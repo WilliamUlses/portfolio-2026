@@ -1,0 +1,257 @@
+/* Fullscreen hero layout and pinned transition stage.
+   Default: fullscreen hero on cobalt backdrop.
+   data-seq="on": pinned scroll sequence shrinking panel to card boundaries with fluted glass overlay. */
+.pin {
+  position: relative;
+  height: 100svh;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--on-hero);
+}
+
+/* Fullscreen cobalt layer clipped during scroll sequence */
+.panel {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-bg);
+}
+
+/* Glass fallback background overlaid by WebGL shader */
+.glassLayer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  will-change: opacity;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgb(0 0 0 / 0.16) 0,
+      rgb(255 255 255 / 0) 0.8%,
+      rgb(255 255 255 / 0.1) 1.4%,
+      rgb(0 0 0 / 0.16) 1.7%
+    ),
+    radial-gradient(22% 30% at 64% 30%, rgb(159 243 255 / 0.5), transparent 70%),
+    radial-gradient(
+      18% 26% at 78% 74%,
+      rgb(255 122 217 / 0.42),
+      transparent 70%
+    ),
+    var(--card-bg, #1e2bff);
+}
+.shader {
+  position: absolute;
+  inset: 0;
+}
+
+.hero {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 84px;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 var(--pad);
+  text-align: center;
+}
+
+/* Variable font settings for display typography */
+.name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-hero);
+  line-height: 1;
+  white-space: nowrap;
+}
+.first {
+  display: inline-block;
+  margin-right: 2.5vw;
+  font-weight: 150;
+  font-stretch: 112.5%;
+  letter-spacing: -0.045em;
+}
+.last {
+  display: inline-block;
+  font-weight: 800;
+  font-stretch: 125%;
+  letter-spacing: -0.06em;
+}
+
+.sub {
+  margin: 2vw 0 0;
+  font-size: var(--text-sub);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+.sub span {
+  display: block;
+  text-wrap: balance;
+}
+
+.rule {
+  margin: 0 var(--pad);
+  border-top: 1px solid var(--on-hero-25);
+}
+
+/* Step card overlay during scroll sequence */
+.block {
+  display: none;
+}
+.stage[data-seq="on"] .block {
+  display: block;
+  position: absolute;
+  left: 16.666%;
+  top: 14%;
+  width: 66.666%;
+  height: 72%;
+  color: var(--on-card);
+  pointer-events: none;
+}
+/* Ensure only sequence card renders when active */
+:global(:root:has([data-seq="on"]) #approche) {
+  display: none;
+}
+
+.steps {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 50%;
+  translate: 0 -50%;
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  grid-area: 1 / 1;
+  max-width: 72%;
+}
+.line {
+  display: block;
+  overflow: hidden;
+}
+.line > span {
+  display: block;
+}
+.label {
+  margin: 0 0 2vw;
+  font-size: var(--text-label);
+  opacity: 0.85;
+}
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-h2);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+}
+.title b {
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 700;
+}
+.detail {
+  margin: 2vw 0 0;
+  max-width: 34ch;
+  font-size: clamp(16px, 1.25vw, 20px);
+  line-height: 1.5;
+}
+.progress {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 7%;
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+  font-size: var(--text-micro);
+}
+.seg {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  overflow: hidden;
+  background: var(--on-hero-25);
+}
+.seg i {
+  position: absolute;
+  inset: 0;
+  background: var(--on-card);
+}
+.count {
+  min-width: 3.2em;
+  text-align: right;
+  opacity: 0.85;
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding-bottom: 76px;
+  }
+  .name {
+    white-space: normal;
+    font-size: 26vw;
+    line-height: 0.86;
+  }
+  .first,
+  .last {
+    display: block;
+    margin: 0;
+  }
+  .sub {
+    margin-top: 6vw;
+  }
+}
+
+:global(.site.dark) .panel,
+:global(.site[data-theme="dark"]) .panel {
+  background:
+    radial-gradient(
+      ellipse 70% 60% at 50% 20%,
+      rgb(40 55 120 / 0.35),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 85% 75%,
+      rgb(159 243 255 / 0.08),
+      transparent 60%
+    ),
+    var(--hero-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(.site:not([data-theme="light"]):not(.light)) .panel {
+    background:
+      radial-gradient(
+        ellipse 70% 60% at 50% 20%,
+        rgb(40 55 120 / 0.35),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 85% 75%,
+        rgb(159 243 255 / 0.08),
+        transparent 60%
+      ),
+      var(--hero-bg);
+  }
+}

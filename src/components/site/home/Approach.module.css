@@ -1,0 +1,115 @@
+/* Approach card: centered cobalt card container with 3 readable methodology steps. */
+.section {
+  padding: 8vw var(--pad);
+  background: var(--bg);
+}
+
+.card {
+  width: 66.666%;
+  margin: 0 auto;
+  padding: 5vw 6%;
+  border-radius: var(--radius-glass);
+  color: var(--on-card);
+}
+
+.steps {
+  display: grid;
+  gap: 5vw;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.label {
+  margin: 0 0 2vw;
+  font-size: var(--text-label);
+  opacity: 0.85;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-h2);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+}
+.title b {
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 700;
+}
+.line {
+  display: block;
+  overflow: hidden;
+}
+.line > span {
+  display: block;
+}
+
+.detail {
+  margin: 2vw 0 0;
+  max-width: 34ch;
+  font-size: clamp(16px, 1.25vw, 20px);
+  line-height: 1.5;
+}
+
+.progress {
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+  margin-top: 5vw;
+  font-size: var(--text-micro);
+}
+.seg {
+  flex: 1;
+  height: 1px;
+  background: var(--bg);
+}
+.count {
+  min-width: 3.2em;
+  text-align: right;
+  opacity: 0.85;
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 12vw var(--pad);
+  }
+  .card {
+    width: 100%;
+    padding: 10vw 7vw;
+  }
+  .steps {
+    gap: 12vw;
+  }
+  .label,
+  .detail {
+    margin-top: 4vw;
+  }
+}
+
+:global(.site.dark) .card,
+:global(.site[data-theme="dark"]) .card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 35px 70px -15px rgba(0, 0, 0, 0.8),
+    0 0 50px -10px rgba(92, 110, 255, 0.22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(.site:not([data-theme="light"]):not(.light)) .card {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 35px 70px -15px rgba(0, 0, 0, 0.8),
+      0 0 50px -10px rgba(92, 110, 255, 0.22);
+  }
+}

@@ -1,0 +1,149 @@
+/* 404 & error page layout: oversized numeral header with content anchored bottom-right. */
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: calc(100svh - var(--pad) - 96px);
+  padding: 2vw var(--pad) 0;
+}
+.code {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(110px, min(32vw, 38svh), 640px);
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 150;
+}
+.code b {
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+
+:global(html[data-theme="dark"]) .code,
+:global(html.dark) .code,
+:global(.site.dark) .code,
+:global(.site[data-theme="dark"]) .code {
+  background: linear-gradient(
+    135deg,
+    rgb(245 247 255 / 0.95) 0%,
+    rgb(140 160 255 / 0.7) 45%,
+    rgb(30 43 255 / 0.4) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 28px rgb(30 43 255 / 0.25));
+}
+
+:global(html[data-theme="dark"]) .code b,
+:global(html.dark) .code b,
+:global(.site.dark) .code b,
+:global(.site[data-theme="dark"]) .code b {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(.site:not([data-theme="light"]):not(.light)) .code {
+    background: linear-gradient(
+      135deg,
+      rgb(245 247 255 / 0.95) 0%,
+      rgb(140 160 255 / 0.7) 45%,
+      rgb(30 43 255 / 0.4) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 28px rgb(30 43 255 / 0.25));
+  }
+}
+.text {
+  align-self: end;
+  justify-self: end;
+  width: min(100%, 560px);
+  padding-top: 2vw;
+}
+.label {
+  margin: 0;
+  font-size: var(--text-label);
+  font-weight: 400;
+}
+.label::before {
+  content: "[ ";
+}
+.label::after {
+  content: " ]";
+}
+.title {
+  margin: 1.2vw 0 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+.lede {
+  margin: 1.4vw 0 0;
+  line-height: 1.6;
+  color: var(--fg-80);
+}
+/* Scoped to .page to override pill styling from Contact module */
+.page .primary {
+  background: var(--fg);
+  color: var(--bg);
+}
+/* Ensure tap target size in inner layout context */
+.page ul li a {
+  display: inline-flex;
+  min-height: 44px;
+}
+.page .primary:hover {
+  background: var(--fg);
+  opacity: 0.85;
+}
+
+:global(html[data-theme="dark"]) .page .primary,
+:global(html.dark) .page .primary,
+:global(.site.dark) .page .primary,
+:global(.site[data-theme="dark"]) .page .primary {
+  background: linear-gradient(135deg, #3d4eff 0%, #1e2bff 100%);
+  color: #ffffff;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  box-shadow:
+    0 4px 20px rgb(30 43 255 / 0.35),
+    inset 0 1px 0 rgb(255 255 255 / 0.3);
+}
+
+:global(html[data-theme="dark"]) .page .primary:hover,
+:global(html.dark) .page .primary:hover,
+:global(.site.dark) .page .primary:hover,
+:global(.site[data-theme="dark"]) .page .primary:hover {
+  background: linear-gradient(135deg, #4f5fff 0%, #2938ff 100%);
+  box-shadow:
+    0 6px 28px rgb(30 43 255 / 0.55),
+    inset 0 1px 0 rgb(255 255 255 / 0.4);
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: 8vw var(--pad) 0;
+  }
+  .text {
+    justify-self: stretch;
+    padding-top: 12vw;
+  }
+  .title {
+    margin-top: 3vw;
+  }
+  .lede {
+    margin-top: 4vw;
+  }
+}

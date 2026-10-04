@@ -1,0 +1,126 @@
+/* Contact page layout: headline statement, contact details (5 cols), and form (7 cols). */
+.page {
+  padding: 2vw var(--pad) 8vw;
+}
+.label {
+  margin: 0;
+  font-size: var(--text-label);
+  font-weight: 400;
+}
+.label::before {
+  content: "[ ";
+}
+.label::after {
+  content: " ]";
+}
+
+.intro {
+  padding-bottom: 5vw;
+  border-bottom: 1px solid var(--fg-15);
+}
+.statement {
+  margin: 1.4vw 0 0;
+  max-width: 16ch;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 8vw, 150px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+}
+.statement b {
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+.lede {
+  margin: 2.2vw 0 0;
+  max-width: 52ch;
+  line-height: 1.6;
+  color: var(--fg-80);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(32px, 6vw, 110px);
+  align-items: start;
+  padding-top: 4vw;
+}
+
+/* Contact information rows separated by subtle dividers */
+.details {
+  margin: 0;
+}
+.details > div {
+  padding: 1.2vw 0 1.4vw;
+  border-top: 1px solid var(--fg-15);
+}
+.details > div:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.details dt {
+  font-size: var(--text-micro);
+  color: var(--fg-80);
+}
+.details dd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin: 0.4em 0 0;
+}
+.details dd ul {
+  margin: 0;
+}
+/* Scoped .page selector ensures minimum touch target size */
+.page .details ul li a {
+  display: inline-flex;
+  min-height: 44px;
+}
+.email {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.2vw, 40px);
+  letter-spacing: -0.02em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  overflow-wrap: anywhere;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 300;
+}
+
+.formTitle {
+  margin: 0 0 clamp(20px, 2vw, 32px);
+  font-size: var(--text-label);
+  font-weight: 400;
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: 6vw var(--pad) 16vw;
+  }
+  .intro {
+    padding-bottom: 10vw;
+  }
+  .statement {
+    margin-top: 4vw;
+  }
+  .lede {
+    margin-top: 5vw;
+  }
+  .body {
+    grid-template-columns: 1fr;
+    gap: 12vw;
+    padding-top: 8vw;
+  }
+  .details > div {
+    padding: 4vw 0 5vw;
+  }
+}

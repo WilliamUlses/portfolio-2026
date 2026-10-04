@@ -1,0 +1,94 @@
+/* Home stack section: sticky label column (4 cols) and tool list column (8 cols). */
+.section {
+  --stack-pad: 20svh;
+  --stack-size: clamp(34px, 4vw, 72px);
+  --stack-line: calc(var(--stack-size) * 1.12);
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(24px, 4vw, 72px);
+  padding: var(--stack-pad) var(--pad);
+}
+
+/* Vertically centered sticky sidebar */
+.aside {
+  align-self: start;
+  position: sticky;
+  top: 50svh;
+  margin-top: calc(var(--stack-line) / 2);
+  translate: 0 -50%;
+}
+.label {
+  margin: 0;
+  font-size: var(--text-label);
+  font-weight: 400;
+}
+.label::before {
+  content: "[ ";
+}
+.label::after {
+  content: " ]";
+}
+.lede {
+  margin: 0.4em 0 0;
+  font-size: var(--text-micro);
+}
+
+.wheel {
+  min-width: 0;
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.item {
+  display: flex;
+  align-items: center;
+  height: var(--stack-line);
+  font-family: var(--font-display);
+  font-size: var(--stack-size);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  font-variation-settings:
+    "wdth" 100,
+    "wght" 360;
+}
+.logo {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 0.78em;
+  height: 0.78em;
+  margin-right: 0.36em;
+  /* --f: 1 = brand color, 0 = text color fallback */
+  color: color-mix(
+    in oklab,
+    var(--brand, currentColor) calc(var(--f, 1) * 100%),
+    currentColor
+  );
+}
+.logo svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+/* Pictogram fallback styling */
+.logo .pictogram {
+  fill: none;
+  stroke: currentColor;
+}
+
+@media (max-width: 767px) {
+  .section {
+    --stack-pad: 16vw;
+    --stack-size: 9vw;
+    grid-template-columns: 1fr;
+    gap: 8vw;
+  }
+  .aside {
+    position: static;
+    margin-top: 0;
+    translate: none;
+  }
+}

@@ -1,0 +1,249 @@
+/* Projects index: typographic list and card grid layouts. */
+
+/* Stretched link: full row or card click target with a single semantic anchor. */
+.stretch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.stretch:focus-visible {
+  outline: none;
+}
+.row:has(.stretch:focus-visible),
+.card:has(.stretch:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.index {
+  font-size: var(--text-label);
+  color: var(--fg-80);
+  font-variant-numeric: tabular-nums;
+}
+.arrow {
+  transition: transform 0.5s var(--ease-out);
+}
+/* Card grid: aligns index and arrow with first line of title. */
+.cardBody .index,
+.cardBody .arrow {
+  padding-top: 0.35em;
+}
+
+/* ── List Layout ───────────────────────────────────────────────────────── */
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4ch minmax(0, 1fr) minmax(0, 11rem) 5ch 1.5em;
+  align-items: baseline;
+  gap: 0 clamp(12px, 2vw, 32px);
+  padding: clamp(14px, 1.5vw, 26px) 0;
+  border-bottom: 1px solid var(--fg-15);
+  transition: opacity 0.5s var(--ease-out);
+}
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.4vw, 80px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+  transition: font-variation-settings 0.6s var(--ease-out);
+}
+.type,
+.year {
+  margin: 0;
+  font-size: var(--text-label);
+}
+.year {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hover / focus: title expands to wide bold; sibling rows dim on pointer hover */
+.row:hover .title,
+.row:has(.stretch:focus-visible) .title {
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+  color: var(--project-title);
+}
+.row:hover .arrow {
+  transform: translate(3px, -3px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .list:has(.row:hover) .row:not(:hover) {
+    opacity: 0.3;
+  }
+}
+
+/* Cursor follower image preview (ProjectPreview) */
+.preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: clamp(240px, 26vw, 460px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radius-glass);
+  pointer-events: none;
+  clip-path: inset(50% 0 50% 0 round var(--radius-glass));
+  transition: clip-path 0.6s var(--ease-out);
+  box-shadow:
+    0 30px 60px -30px rgb(0 0 0 / 0.55),
+    0 0 0 1px var(--fg-15);
+}
+.preview[data-show] {
+  clip-path: inset(0 0 0 0 round var(--radius-glass));
+}
+.previewImage {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+}
+.previewImage[data-active] {
+  opacity: 1;
+}
+.previewImage img {
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* ── Grid Layout ───────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3.4vw, 56px) clamp(16px, 2vw, 32px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.card {
+  position: relative;
+  display: grid;
+  gap: 16px;
+}
+.media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radius-glass);
+  background: var(--color-frame);
+  border: 1px solid var(--fg-15);
+}
+.media img {
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.9s var(--ease-out);
+}
+.card:hover .media img {
+  transform: scale(1.03);
+}
+.card:hover .arrow {
+  transform: translate(3px, -3px);
+}
+.cardBody {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0 1.2em;
+  padding-top: 14px;
+  border-top: 1px solid var(--fg-15);
+}
+.cardTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 500;
+}
+.card:hover .cardTitle,
+.card:has(.stretch:focus-visible) .cardTitle {
+  color: var(--project-title);
+}
+.meta {
+  margin: 0.3em 0 0;
+  font-size: var(--text-label);
+  color: var(--fg-80);
+}
+
+@media (max-width: 767px) {
+  .row {
+    grid-template-columns: 3ch minmax(0, 1fr) auto;
+    align-items: start;
+    row-gap: 8px;
+    padding: 16px 0;
+  }
+  .row .index {
+    grid-column: 1;
+    grid-row: 1;
+    padding-top: 0.16em;
+  }
+  .title {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: clamp(22px, 6.8vw, 34px);
+    line-height: 1.16;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .row .arrow {
+    grid-column: 3;
+    grid-row: 1;
+    text-align: right;
+    padding-top: 0.18em;
+  }
+  .type {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+  }
+  .year {
+    grid-column: 3;
+    grid-row: 2;
+    margin: 0;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .cardTitle {
+    font-size: clamp(20px, 6vw, 30px);
+    line-height: 1.18;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Staggered entrance animation; waits until page transition completes (!data-nav). */
+@media (prefers-reduced-motion: no-preference) {
+  :global(html:not([data-nav])) .list > li,
+  :global(html:not([data-nav])) .grid > li {
+    animation: rise 0.8s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+  :global(html[data-nav]) .list > li,
+  :global(html[data-nav]) .grid > li {
+    opacity: 0;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+}

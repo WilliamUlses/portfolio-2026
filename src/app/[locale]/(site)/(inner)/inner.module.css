@@ -1,0 +1,10 @@
+/* Inner page container: bottom padding ensures floating navigation menu does not overlap content */
+.main {
+  padding-top: var(--pad);
+  padding-bottom: 96px;
+}
+/* Minimum tap target height for list links (WCAG 2.2) */
+.main :global(:is(ul, ol, nav) a) {
+  display: inline-block;
+  min-height: 24px;
+}
