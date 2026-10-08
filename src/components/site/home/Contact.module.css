@@ -1,0 +1,121 @@
+/* Home contact section: text column (5 cols) and form column (7 cols). */
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(32px, 6vw, 110px);
+  align-items: start;
+  padding: 8vw var(--pad) 9vw;
+}
+
+.label {
+  margin: 0;
+  font-size: var(--text-label);
+  font-weight: 400;
+}
+.label::before {
+  content: "[ ";
+}
+.label::after {
+  content: " ]";
+}
+.statement {
+  margin: 1.4vw 0 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+}
+.statement b {
+  white-space: nowrap;
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+.lede {
+  margin: 1.6vw 0 0;
+  color: var(--fg-80);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 2.4vw 0 0;
+  padding: 0;
+  list-style: none;
+}
+/* Interactive link and email copy pills */
+.pill {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 44px;
+  padding: 6px 20px;
+  border: 1px solid var(--fg);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--text-label);
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s var(--ease-out);
+}
+.pill:hover {
+  background: var(--fg-15);
+}
+
+:global(html[data-theme="dark"]) .pill,
+:global(html.dark) .pill,
+:global(.site.dark) .pill,
+:global(.site[data-theme="dark"]) .pill {
+  border-color: rgb(255 255 255 / 0.18);
+  background: rgb(18 18 24 / 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--fg, #e8e7e1);
+}
+
+:global(html[data-theme="dark"]) .pill:hover,
+:global(html.dark) .pill:hover,
+:global(.site.dark) .pill:hover,
+:global(.site[data-theme="dark"]) .pill:hover {
+  border-color: rgb(92 110 255 / 0.5);
+  background: rgb(30 43 255 / 0.16);
+  box-shadow: 0 0 18px rgb(92 110 255 / 0.25);
+  color: #ffffff;
+}
+.pillHint {
+  font-size: var(--text-micro);
+  color: var(--fg-80);
+}
+
+.form {
+  padding-top: calc(var(--text-label) * 1.55 + 1.4vw);
+}
+
+@media (max-width: 767px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 10vw;
+    padding: 16vw var(--pad) 18vw;
+  }
+  .statement {
+    margin-top: 4vw;
+  }
+  .lede {
+    margin-top: 4vw;
+  }
+  .links {
+    margin-top: 6vw;
+  }
+  .form {
+    padding-top: 0;
+  }
+}

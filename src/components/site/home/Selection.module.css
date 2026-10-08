@@ -1,0 +1,327 @@
+/* Home selection showcase layout.
+   Default: static stacked panels per project using scoped variables (--slide-*).
+   data-seq="on": pinned scroll viewport with script-interpolated theme variables (--sel-*). */
+
+.section {
+  position: relative;
+}
+
+.pin {
+  position: relative;
+  color: var(--sel-text);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--pad);
+  padding: 3vw var(--pad) 1.4vw;
+  font-size: var(--text-label);
+  color: var(--accent);
+}
+.heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 400;
+}
+.heading::before {
+  content: "[ ";
+}
+.heading::after {
+  content: " ]";
+}
+.all {
+  display: inline-block;
+  min-height: 24px;
+  border-bottom: 1px solid currentColor;
+}
+
+.slides {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Default stacked panel styling */
+.slide {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 1.2vw;
+  padding: 7vw var(--pad) 8vw;
+  background: var(--slide-bg);
+  color: var(--slide-text);
+  text-align: center;
+}
+.mask {
+  display: block;
+  overflow: hidden;
+  /* Extra padding prevents clipping descenders and accents */
+  padding: 0.08em 0 0.18em;
+  margin: -0.08em 0 -0.18em;
+}
+.roll {
+  display: block;
+  will-change: transform;
+}
+.title {
+  margin: 0;
+  max-width: 100%;
+  color: var(--slide-title);
+  font-family: var(--font-display);
+  font-weight: 780;
+  font-stretch: 125%;
+  font-size: clamp(40px, 7.2vw, 128px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+.title a:focus-visible {
+  outline-offset: -4px;
+}
+.meta {
+  margin: 0;
+  font-size: var(--text-label);
+}
+.stage {
+  position: relative;
+  width: min(74%, 1180px);
+  aspect-ratio: 16 / 10;
+  margin-top: 2vw;
+  perspective: 1100px;
+}
+.image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--color-frame);
+  transform-origin: 50% 100%;
+  box-shadow: 0 30px 60px -30px rgb(20 28 120 / 0.4);
+  will-change: transform, opacity;
+}
+.image img {
+  object-fit: cover;
+  object-position: top center;
+}
+.index {
+  font-size: var(--text-micro);
+}
+.ticks,
+.progressFooter,
+.dot {
+  display: none;
+}
+
+/* Pinned sequence mode */
+.section[data-seq="on"] .pin {
+  height: 100svh;
+  overflow: hidden;
+  background: var(--sel-bg);
+}
+.section[data-seq="on"] .head {
+  padding-top: 1.6vw;
+  position: relative;
+  z-index: 3;
+  color: var(--sel-text);
+}
+.section[data-seq="on"] .slides {
+  position: absolute;
+  inset: 0;
+}
+.section[data-seq="on"] .slide {
+  position: absolute;
+  inset: 0;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  align-content: start;
+  gap: 0.8vw;
+  padding: calc(1.6vw + 3.6vw) var(--pad) 128px;
+  background: none;
+  color: var(--sel-text);
+}
+.section[data-seq="on"] .title {
+  color: var(--sel-title);
+}
+.section[data-seq="on"] .stage {
+  align-self: center;
+  width: auto;
+  height: min(100%, 46vw);
+  max-width: min(74%, 1180px);
+  margin-top: 1vw;
+}
+.section[data-seq="on"] .index {
+  display: none;
+}
+/* Inactive slides ignore pointer events */
+.section[data-seq="on"] .slide[data-active="false"] {
+  pointer-events: none;
+}
+
+.section[data-seq="on"] .ticks {
+  position: absolute;
+  z-index: 10;
+  left: var(--pad);
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tickButton {
+  display: flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 0;
+  background: transparent;
+  border: none;
+  color: var(--sel-text);
+  cursor: pointer;
+  appearance: none;
+}
+
+.tickBar {
+  display: block;
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0.35;
+  transition:
+    width 0.4s var(--ease-out),
+    opacity 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.tickButton:hover .tickBar {
+  width: 28px;
+  opacity: 0.8;
+}
+
+.tickButton[data-on="true"] .tickBar {
+  width: 42px;
+  opacity: 1;
+}
+
+.section[data-seq="on"] .progressFooter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: absolute;
+  z-index: 5;
+  right: var(--pad);
+  bottom: 26px;
+  margin: 0;
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--sel-text);
+}
+
+.count {
+  margin: 0;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.keysHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.45;
+  transition: opacity 0.25s ease;
+}
+
+.progressFooter:hover .keysHint {
+  opacity: 0.9;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  font-family: inherit;
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* Floating cursor view badge */
+.section[data-seq="on"] .dot {
+  display: block;
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+.dot span {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+  border-radius: 50%;
+  background: var(--sel-dot);
+  color: #fff;
+  font-size: var(--text-micro);
+  transform: scale(0);
+  transition: transform 0.4s var(--ease-out);
+}
+.dot[data-on="true"] span {
+  transform: scale(1);
+}
+@media (pointer: fine) {
+  .section[data-seq="on"] .image {
+    cursor: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .head {
+    padding: 10vw var(--pad) 4vw;
+  }
+  .slide {
+    gap: 3vw;
+    padding: 12vw var(--pad) 14vw;
+  }
+  .title {
+    white-space: normal;
+    font-size: 13vw;
+    text-wrap: balance;
+  }
+  .stage {
+    width: 100%;
+    margin-top: 4vw;
+  }
+  .image {
+    border-radius: 12px;
+  }
+}
+
+:global(.site.dark) .slide,
+:global(.site[data-theme="dark"]) .slide {
+  background: var(--slide-bg-dark, var(--slide-bg));
+  color: var(--slide-text-dark, var(--slide-text));
+}
+
+:global(.site.dark) .section[data-seq="on"] .slide,
+:global(.site[data-theme="dark"]) .section[data-seq="on"] .slide {
+  background: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(.site:not([data-theme="light"]):not(.light)) .slide {
+    background: var(--slide-bg-dark, var(--slide-bg));
+    color: var(--slide-text-dark, var(--slide-text));
+  }
+  :global(.site:not([data-theme="light"]):not(.light))
+    .section[data-seq="on"]
+    .slide {
+    background: none;
+  }
+}

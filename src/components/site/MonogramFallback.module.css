@@ -1,0 +1,46 @@
+.monogramLight,
+.monogramDark {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+.monogramLight {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.monogramDark {
+  opacity: 0;
+  pointer-events: none;
+}
+
+:global(html.dark) .monogramLight,
+:global(html[data-theme="dark"]) .monogramLight,
+:global(.site.dark) .monogramLight,
+:global(.site[data-theme="dark"]) .monogramLight {
+  opacity: 0;
+  pointer-events: none;
+}
+
+:global(html.dark) .monogramDark,
+:global(html[data-theme="dark"]) .monogramDark,
+:global(.site.dark) .monogramDark,
+:global(.site[data-theme="dark"]) .monogramDark {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(html:not([data-theme="light"]):not(.light)) .monogramLight {
+    opacity: 0;
+    pointer-events: none;
+  }
+  :global(html:not([data-theme="light"]):not(.light)) .monogramDark {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

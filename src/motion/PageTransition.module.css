@@ -1,0 +1,118 @@
+/* Cobalt transition curtain and floating shared-element image overlay (PageTransition) */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: grid;
+  place-items: center;
+  padding: var(--pad);
+  background: var(--color-cobalt);
+  color: var(--color-paper);
+  visibility: hidden;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.title {
+  margin: 0;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-size: clamp(56px, 16vw, 260px);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.foot {
+  position: absolute;
+  left: var(--pad);
+  bottom: calc(var(--pad) + env(safe-area-inset-bottom, 0px));
+  margin: 0;
+  font-size: var(--text-label);
+  opacity: 0.8;
+}
+
+.clone {
+  position: fixed;
+  z-index: 950;
+  object-fit: cover;
+  object-position: top center;
+  pointer-events: none;
+}
+
+:global(html[data-theme="dark"]) .curtain,
+:global(html.dark) .curtain,
+:global(.site.dark) .curtain,
+:global(.site[data-theme="dark"]) .curtain {
+  background-color: var(--hero-bg, #0c0e18);
+  background-image:
+    radial-gradient(
+      ellipse 90% 60% at 50% 50%,
+      rgb(30 43 255 / 0.22),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 80% 80%,
+      rgb(0 225 255 / 0.08),
+      transparent 65%
+    ),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.25' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  background-size:
+    auto,
+    auto,
+    120px 120px;
+  background-repeat: no-repeat, no-repeat, repeat;
+  color: #f5f7ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(html:not([data-theme="light"]):not(.light)) .curtain {
+    background-color: var(--hero-bg, #0c0e18);
+    background-image:
+      radial-gradient(
+        ellipse 90% 60% at 50% 50%,
+        rgb(30 43 255 / 0.22),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 80% 80%,
+        rgb(0 225 255 / 0.08),
+        transparent 65%
+      ),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.25' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    background-size:
+      auto,
+      auto,
+      120px 120px;
+    background-repeat: no-repeat, no-repeat, repeat;
+    color: #f5f7ff;
+  }
+}
+
+:global(html[data-theme="dark"]) .title,
+:global(html.dark) .title,
+:global(.site.dark) .title,
+:global(.site[data-theme="dark"]) .title {
+  color: #f5f7ff;
+  text-shadow: 0 0 32px rgb(30 43 255 / 0.3);
+}
+
+:global(html[data-theme="dark"]) .foot,
+:global(html.dark) .foot,
+:global(.site.dark) .foot,
+:global(.site[data-theme="dark"]) .foot {
+  color: rgb(245 247 255 / 0.72);
+}
+
+/* Case study info column fade-in after shared image transition */
+:global([data-shared-fade]) {
+  transition: opacity 0.7s var(--ease-out);
+}
+/* While shared transition is active: incoming target cover remains hidden until clone lands */
+:global(html[data-shared]) :global([data-shared-target]) {
+  opacity: 0;
+}
+:global(html[data-shared]) :global([data-shared-fade]) {
+  opacity: 0;
+}

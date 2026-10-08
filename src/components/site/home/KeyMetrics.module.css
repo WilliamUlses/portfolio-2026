@@ -1,0 +1,271 @@
+/* Home key metrics section: Pure Swiss typographic data grid with hairline rules.
+   Strict adherence to design_system_william_ulses.md:
+   - Swiss first: hairline borders, bracketed labels, hierarchy by size and weight.
+   - Zero decorative shadows, zero pulsed badges.
+   - Light mode: cobalt ink on paper background.
+   - Dark mode: 100% pure mineral white title and numbers, no blue on dark headlines. */
+
+.section {
+  padding: 8vw var(--pad) 9vw;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Section Header (matching Selection, Stack, Lab, and Contact) */
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 1.4vw;
+  border-bottom: 1px solid var(--fg-15);
+  font-size: var(--text-label);
+  color: var(--accent);
+}
+
+.label {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.label::before {
+  content: "[ ";
+}
+
+.label::after {
+  content: " ]";
+}
+
+.count {
+  font-size: var(--text-label);
+  color: var(--fg-60);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Statement layout (8 cols statement, 4 cols lede) */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: var(--pad);
+  align-items: end;
+  margin: 4vw 0 5vw;
+}
+
+.statement {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  color: var(--fg);
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+}
+
+.statement b {
+  white-space: nowrap;
+  font-weight: 400;
+  color: var(--fg);
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+
+.lede {
+  margin: 0;
+  max-width: 38ch;
+  color: var(--fg-60);
+  line-height: 1.6;
+  font-size: var(--text-body);
+}
+
+/* ── Swiss Data Grid (Hairline borders, no boxed card background) ────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--fg-15);
+  border-bottom: 1px solid var(--fg-15);
+}
+
+.metricCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(24px, 3.2vw, 44px) clamp(16px, 2.2vw, 32px);
+  border-right: 1px solid var(--fg-15);
+  min-height: clamp(220px, 20vw, 300px);
+  transition: background-color 0.25s var(--ease-out);
+}
+
+.metricCol:last-child {
+  border-right: none;
+}
+
+.metricCol:hover {
+  background: var(--fg-15);
+}
+
+.colHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: clamp(20px, 2.5vw, 36px);
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-micro);
+  color: var(--fg-60);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.colTag {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* Monumental Archivo Variable Number */
+.valueContainer {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 5.5vw, 6.2rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--fg);
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 800;
+  margin-bottom: clamp(16px, 2vw, 28px);
+}
+
+.prefix,
+.suffix {
+  font-size: 0.55em;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 700;
+}
+
+.metricLabel {
+  margin: 0 0 6px;
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.1vw, 18px);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--fg);
+  letter-spacing: -0.015em;
+}
+
+.metricSubtext {
+  margin: 0;
+  font-size: var(--text-micro);
+  line-height: 1.5;
+  color: var(--fg-60);
+}
+
+/* Mechanical rolling reel digits */
+.digitCol {
+  display: inline-block;
+  height: 1em;
+  line-height: 1;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.digitReel {
+  display: flex;
+  flex-direction: column;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.digitReel > span {
+  display: block;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+}
+
+/* ── Strict Dark Mode Overrides (100% white headlines & numbers, zero blue) ── */
+:global(.site.dark) .head,
+:global(.site[data-theme="dark"]) .head {
+  color: #e8e7e1;
+  border-bottom-color: rgba(232, 231, 225, 0.14);
+}
+
+:global(.site.dark) .statement,
+:global(.site[data-theme="dark"]) .statement,
+:global(.site.dark) .statement b,
+:global(.site[data-theme="dark"]) .statement b,
+:global(.site.dark) .valueContainer,
+:global(.site[data-theme="dark"]) .valueContainer,
+:global(.site.dark) .prefix,
+:global(.site[data-theme="dark"]) .prefix,
+:global(.site.dark) .suffix,
+:global(.site[data-theme="dark"]) .suffix,
+:global(.site.dark) .colTag,
+:global(.site[data-theme="dark"]) .colTag,
+:global(.site.dark) .metricLabel,
+:global(.site[data-theme="dark"]) .metricLabel {
+  color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(.site:not([data-theme="light"]):not(.light)) .head {
+    color: #e8e7e1;
+    border-bottom-color: rgba(232, 231, 225, 0.14);
+  }
+  :global(.site:not([data-theme="light"]):not(.light)) .statement,
+  :global(.site:not([data-theme="light"]):not(.light)) .statement b,
+  :global(.site:not([data-theme="light"]):not(.light)) .valueContainer,
+  :global(.site:not([data-theme="light"]):not(.light)) .prefix,
+  :global(.site:not([data-theme="light"]):not(.light)) .suffix,
+  :global(.site:not([data-theme="light"]):not(.light)) .colTag,
+  :global(.site:not([data-theme="light"]):not(.light)) .metricLabel {
+    color: #ffffff;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .metricCol:nth-child(2) {
+    border-right: none;
+  }
+  .metricCol:nth-child(1),
+  .metricCol:nth-child(2) {
+    border-bottom: 1px solid var(--fg-15);
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 14vw var(--pad) 16vw;
+  }
+  .intro {
+    grid-template-columns: 1fr;
+    margin: 6vw 0 8vw;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .metricCol {
+    border-right: none;
+    border-bottom: 1px solid var(--fg-15);
+    padding: 32px 0;
+    min-height: auto;
+  }
+  .metricCol:last-child {
+    border-bottom: none;
+  }
+}

@@ -1,0 +1,374 @@
+/* About page layout: header grid, career journey timeline, and tools showcase */
+.page {
+  padding: 0 var(--pad) 6vw;
+}
+.label {
+  margin: 0;
+  font-size: var(--text-label);
+  font-weight: 400;
+}
+.label::before {
+  content: "[ ";
+}
+.label::after {
+  content: " ]";
+}
+
+/* ── Header: glass monogram (5 cols) + bio content (7 cols) ──────────── */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: center;
+  min-height: calc(100svh - var(--pad) - 96px);
+  padding: 2vw 0 6vw;
+}
+.visual {
+  justify-self: center;
+  width: min(100%, 520px);
+  /* Variables expected by AboutVisual to compute container sizing */
+  --about-pad-top: 0px;
+  --about-pad-bottom: 0px;
+}
+.text {
+  min-width: 0;
+}
+.statement {
+  margin: 1.4vw 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.2vw, 76px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+}
+.statement b {
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+.lede {
+  margin: 2.2vw 0 0;
+  max-width: 56ch;
+  line-height: 1.6;
+}
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 2vw;
+  margin: 2.4vw 0 0;
+}
+.facts div {
+  padding: 0.8vw 0;
+  border-top: 1px solid var(--fg-15);
+}
+.facts dt {
+  font-size: var(--text-micro);
+  color: var(--fg-80);
+}
+.facts dd {
+  margin: 0.2em 0 0;
+}
+
+/* ── Journey: full-bleed cobalt career timeline ──────────────────────── */
+.journey {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(24px, 4vw, 72px);
+  margin: 0 calc(-1 * var(--pad));
+  padding: 6vw var(--pad);
+  background: var(--color-cobalt);
+  color: var(--color-paper);
+}
+
+:global(.site.dark) .journey,
+:global(.site[data-theme="dark"]) .journey {
+  background-color: var(--card-bg, #111424);
+  background-image:
+    radial-gradient(
+      ellipse 90% 60% at 20% 0%,
+      rgb(30 43 255 / 0.16),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 85% 100%,
+      rgb(0 225 255 / 0.05),
+      transparent 60%
+    );
+  color: var(--fg);
+  border-top: 1px solid var(--fg-15);
+  border-bottom: 1px solid var(--fg-15);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(.site:not([data-theme="light"]):not(.light)) .journey {
+    background-color: var(--card-bg, #111424);
+    background-image:
+      radial-gradient(
+        ellipse 90% 60% at 20% 0%,
+        rgb(30 43 255 / 0.16),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 85% 100%,
+        rgb(0 225 255 / 0.05),
+        transparent 60%
+      );
+    color: var(--fg);
+    border-top: 1px solid var(--fg-15);
+    border-bottom: 1px solid var(--fg-15);
+  }
+}
+.journeyAside {
+  align-self: start;
+  position: sticky;
+  top: 28vh;
+}
+/* Oversized year numeral: 4 mechanical counter reel columns */
+.year {
+  display: flex;
+  margin: 1vw 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(88px, 13vw, 240px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+.col {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+.reel {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.9s var(--ease-in-out);
+}
+.reel span {
+  height: 1em;
+}
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  padding: 4vw 0;
+  border-top: 1px solid rgb(242 241 236 / 0.3);
+  transition: opacity 0.6s var(--ease-out);
+}
+.step:last-child {
+  border-bottom: 1px solid rgb(242 241 236 / 0.3);
+}
+
+:global(.site.dark) .step,
+:global(.site[data-theme="dark"]) .step {
+  border-color: var(--fg-15);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(.site:not([data-theme="light"]):not(.light)) .step {
+    border-color: var(--fg-15);
+  }
+}
+
+/* Non-active timeline steps dimmed while maintaining WCAG contrast */
+.steps[data-live] .step:not([data-active]) {
+  opacity: 0.85;
+}
+
+:global(.site.dark) .steps[data-live] .step:not([data-active]),
+:global(.site[data-theme="dark"]) .steps[data-live] .step:not([data-active]) {
+  opacity: 0.45;
+}
+:global(.site.dark) .steps[data-live] .step[data-active],
+:global(.site[data-theme="dark"]) .steps[data-live] .step[data-active] {
+  opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(.site:not([data-theme="light"]):not(.light))
+    .steps[data-live]
+    .step:not([data-active]) {
+    opacity: 0.45;
+  }
+  :global(.site:not([data-theme="light"]):not(.light))
+    .steps[data-live]
+    .step[data-active] {
+    opacity: 1;
+  }
+}
+.period {
+  margin: 0;
+  font-size: var(--text-label);
+  font-variant-numeric: tabular-nums;
+}
+.stepTitle {
+  margin: 0.4em 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 2.8vw, 52px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 500;
+}
+.place {
+  margin: 0.5em 0 0;
+  font-size: var(--text-label);
+}
+.stepText {
+  margin: 1.2em 0 0;
+  max-width: 56ch;
+  line-height: 1.6;
+}
+
+/* ── Tools: categorized grid with brand logos ────────────────────────── */
+.tools {
+  padding: 7vw 0 4vw;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 1vw;
+  border-bottom: 1px solid var(--fg);
+}
+.count {
+  font-size: var(--text-label);
+  font-variant-numeric: tabular-nums;
+}
+/* Skill group: domain label (3 cols) + tools grid (9 cols) */
+.skill {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: 0 var(--pad);
+  padding: 1.6vw 0;
+  border-bottom: 1px solid var(--fg-15);
+}
+.skillName {
+  margin: 0;
+  padding-top: 18px;
+  font-size: var(--text-label);
+  font-weight: 400;
+}
+.skillName sup {
+  margin-left: 0.3em;
+  font-size: 0.7em;
+}
+.toolGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 var(--pad);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tool {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0;
+}
+/* Brand logo: accent color transition on card hover */
+.toolLogo {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  color: var(--fg);
+  transition: color 0.4s var(--ease-out);
+}
+.tool:hover .toolLogo {
+  color: var(--brand, var(--fg));
+}
+.toolLogo svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+.toolLogo .pictogram {
+  fill: none;
+  stroke: currentColor;
+}
+.toolName {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.5vw, 26px);
+  letter-spacing: -0.02em;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 400;
+}
+
+/* ── Availability ────────────────────────────────────────────────────── */
+.availability {
+  padding: 4vw 0 2vw;
+}
+.availStatement {
+  margin: 1.4vw 0 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+}
+.availStatement b {
+  white-space: nowrap;
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+/* Contact pills: explicit touch target size override */
+.page .availability ul li a {
+  display: inline-flex;
+  min-height: 44px;
+}
+/* Primary solid pill button */
+.availability .primary {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+@media (max-width: 767px) {
+  .intro {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding: 4vw 0 10vw;
+  }
+  .visual {
+    width: min(70%, 320px);
+  }
+  .facts {
+    grid-template-columns: 1fr;
+  }
+  .journey {
+    grid-template-columns: 1fr;
+    padding: 12vw var(--pad);
+  }
+  .journeyAside {
+    position: static;
+  }
+  .skill {
+    grid-template-columns: 1fr;
+    padding: 5vw 0;
+  }
+  .skillName {
+    padding-top: 0;
+  }
+  .toolGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

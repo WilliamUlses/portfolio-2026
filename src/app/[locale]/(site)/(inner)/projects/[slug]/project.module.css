@@ -1,0 +1,174 @@
+/* Case study layout:
+   Left: sticky column displaying project metadata, disciplines, summary, live link, and next project.
+   Right: vertical gallery of media blocks and content. */
+.page {
+  padding: 0 var(--pad) 6vw;
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+  gap: clamp(24px, 3vw, 56px);
+  align-items: start;
+}
+
+/* ── Sticky info column ─────────────────────────────────────────────────── */
+.info {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 2.2vw, 40px);
+  min-height: calc(100svh - var(--pad));
+  max-height: 100svh;
+  padding: 2vw 0 96px;
+}
+/* Project index numeral within published list */
+.counter {
+  margin: 0 0 1.2vw;
+  font-size: var(--text-label);
+  font-variant-numeric: tabular-nums;
+}
+/* Oversized display title */
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(48px, 5.6vw, 108px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  /* Project accent color meeting WCAG AA contrast ratio */
+  color: var(--project-title, inherit);
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+.meta {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 0 var(--pad);
+  margin-top: auto;
+  padding-top: 1.2vw;
+  /* Section divider rule */
+  border-top: 1px solid var(--fg);
+  font-size: clamp(17px, 1.35vw, 22px);
+  line-height: 1.3;
+}
+.year {
+  margin: 0;
+}
+.details {
+  display: grid;
+  gap: 1.6em;
+  min-width: 0;
+}
+/* Disciplines list with subtle horizontal dividers */
+.disciplines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.disciplines li {
+  padding: 0.35em 0;
+  border-bottom: 1px solid var(--fg-15);
+}
+.summary {
+  margin: 0;
+  max-width: 34ch;
+}
+/* Live project external link pill */
+.details .visit {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--fg);
+  border-radius: 999px;
+  font-size: var(--text-label);
+  transition:
+    background-color 0.3s var(--ease-out),
+    color 0.3s var(--ease-out);
+}
+.details .visit:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* ── Media Gallery ────────────────────────────────────────────────────── */
+.gallery {
+  display: grid;
+  gap: clamp(16px, 1.4vw, 24px);
+  min-width: 0;
+  padding-top: 2vw;
+}
+.shot {
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--color-frame);
+}
+.shot :is(img, video) {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Scroll-driven clip-path reveals (RevealShots) */
+.gallery[data-reveal] [data-shot] {
+  transition:
+    clip-path 1.1s var(--ease-out),
+    translate 1.1s var(--ease-out),
+    opacity 0.6s var(--ease-out);
+}
+.gallery[data-reveal] [data-shot]:not([data-in]) {
+  clip-path: inset(18% 0 0 0);
+  translate: 0 48px;
+  opacity: 0;
+}
+
+/* ── Draft Mode Preview Banner ────────────────────────────────────────── */
+.preview {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0 calc(-1 * var(--pad)) 16px;
+  padding: 10px var(--pad);
+  background: var(--color-cobalt);
+  color: var(--color-paper);
+  font-size: var(--text-label);
+}
+.preview p {
+  margin: 0;
+}
+.preview button {
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+@media (max-width: 899px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .info {
+    position: static;
+    min-height: 0;
+    max-height: none;
+    padding: 4vw 0 6vw;
+  }
+  .title {
+    font-size: clamp(44px, 12vw, 96px);
+  }
+  .meta {
+    padding-top: 8vw;
+  }
+}

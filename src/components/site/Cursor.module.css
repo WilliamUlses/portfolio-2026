@@ -1,0 +1,94 @@
+/* Interactive cursor follower: scroll progress ring or project view pill.
+   Offset from native cursor and placed below modal transitions and preloader. */
+.cursor {
+  --c-fg: var(--color-cobalt);
+  --c-bg: var(--color-paper);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 800;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+  /* Inverted contrast ring: difference blend mode ensures visibility across light, dark, and media backgrounds */
+  mix-blend-mode: difference;
+}
+/* View badge mode: standard color blending */
+.cursor[data-mode="view"] {
+  mix-blend-mode: normal;
+}
+.cursor[data-on][data-visible] {
+  opacity: 1;
+}
+/* High specificity rules for hidden and disabled states */
+.cursor[data-on][data-hidden],
+.cursor[data-on][data-mode="none"],
+:global(html[data-loader]) .cursor[data-on] {
+  opacity: 0;
+}
+.cursor[data-dark] {
+  --c-fg: var(--color-paper);
+  --c-bg: var(--color-cobalt);
+}
+
+/* Progress ring: fine track with clockwise SVG stroke */
+.ring {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 36px;
+  height: 36px;
+  rotate: -90deg;
+  transition:
+    scale 0.45s var(--ease-out),
+    opacity 0.3s var(--ease-out);
+}
+.track,
+.arc {
+  fill: none;
+  stroke: var(--color-paper);
+  stroke-width: 1.5;
+}
+.track {
+  opacity: 0.35;
+}
+.arc {
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Interactive view pill badge */
+.pill {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 10px 16px;
+  border-radius: 99px;
+  background: var(--c-fg);
+  color: var(--c-bg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1;
+  white-space: nowrap;
+  transform-origin: top left;
+  scale: 0;
+  opacity: 0;
+  transition:
+    scale 0.45s var(--ease-out),
+    opacity 0.3s var(--ease-out);
+}
+.cursor[data-mode="view"] .ring {
+  scale: 0.4;
+  opacity: 0;
+}
+.cursor[data-mode="view"] .pill {
+  scale: 1;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring,
+  .pill {
+    transition: opacity 0.2s linear;
+  }
+}

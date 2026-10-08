@@ -1,0 +1,218 @@
+/* Process timeline section — Swiss grid DA */
+/* Reveal: rows slide up from below on scroll (IntersectionObserver) */
+/* Hover: title weight jumps thin→fat + cobalt  */
+
+.section {
+  padding: 7vw 0 4vw;
+}
+
+/* ── Section header: [ Process ] ── label left, count right ── */
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 1vw;
+  border-bottom: 1px solid var(--fg);
+}
+.headLabel {
+  margin: 0;
+  font-size: var(--text-label);
+  font-weight: 400;
+}
+.headLabel::before {
+  content: "[ ";
+}
+.headLabel::after {
+  content: " ]";
+}
+.headCount {
+  font-size: var(--text-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-60, var(--ink-60));
+}
+
+/* ── Timeline list ── */
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ── Row: index/duration (3 cols) + content (9 cols) ── */
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: 0 var(--pad);
+  padding: 3vw 0;
+  border-bottom: 1px solid var(--fg-15, var(--ink-15));
+
+  /* Reveal animation: start hidden below */
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rowVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Left: index + duration ── */
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  padding-top: 0.25em;
+}
+.index {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-15, var(--ink-15));
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 700;
+  transition:
+    color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    font-variation-settings 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.duration {
+  font-size: var(--text-micro);
+  color: var(--fg-60, var(--ink-60));
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+
+/* ── Right: label + title + text ── */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+.label {
+  margin: 0;
+  font-size: var(--text-label);
+  color: var(--fg-60, var(--ink-60));
+  letter-spacing: 0.01em;
+}
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.2vw, 58px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 400;
+  font-variation-settings:
+    "wdth" 112.5,
+    "wght" 200;
+  transition:
+    font-variation-settings 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.text {
+  margin: 0;
+  max-width: 54ch;
+  line-height: 1.6;
+  color: var(--fg-60, var(--ink-60));
+  font-size: var(--text-body);
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Hover state: title goes fat+ink (light) / white (dark), index gets bright, text reveals ── */
+.row:hover .title,
+.row:focus-within .title {
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+  color: var(--fg);
+}
+.row:hover .index,
+.row:focus-within .index {
+  color: var(--fg);
+  font-variation-settings:
+    "wdth" 125,
+    "wght" 780;
+}
+.row:hover .text,
+.row:focus-within .text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Dark mode: keep same white paper on hover ── */
+:global(.site.dark) .row:hover .title,
+:global(.site[data-theme="dark"]) .row:hover .title,
+:global(.site.dark) .row:focus-within .title,
+:global(.site[data-theme="dark"]) .row:focus-within .title {
+  color: var(--color-paper, #f2f1ec);
+}
+:global(.site.dark) .row:hover .index,
+:global(.site[data-theme="dark"]) .row:hover .index,
+:global(.site.dark) .row:focus-within .index,
+:global(.site[data-theme="dark"]) .row:focus-within .index {
+  color: var(--color-paper, #f2f1ec);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(.site:not([data-theme="light"]):not(.light)) .row:hover .title,
+  :global(.site:not([data-theme="light"]):not(.light))
+    .row:focus-within
+    .title {
+    color: var(--color-paper, #f2f1ec);
+  }
+  :global(.site:not([data-theme="light"]):not(.light)) .row:hover .index,
+  :global(.site:not([data-theme="light"]):not(.light))
+    .row:focus-within
+    .index {
+    color: var(--color-paper, #f2f1ec);
+  }
+}
+
+/* ── reduced motion: skip transitions ── */
+@media (prefers-reduced-motion: reduce) {
+  .row {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .title,
+  .index,
+  .text {
+    transition: none;
+  }
+  .text {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 767px) {
+  .section {
+    padding: 12vw 0 8vw;
+  }
+  .row {
+    grid-template-columns: 1fr;
+    gap: 1.6em 0;
+    padding: 6vw 0;
+    transform: translateY(20px);
+  }
+  .index {
+    font-size: clamp(36px, 10vw, 64px);
+  }
+  .title {
+    font-size: clamp(22px, 6vw, 42px);
+  }
+  .text {
+    opacity: 1;
+    transform: none;
+  }
+}

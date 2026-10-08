@@ -1,0 +1,28 @@
+/* Mechanical counter layout: one overflow-hidden reel column per digit. */
+.counter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25em;
+  font-variant-numeric: tabular-nums;
+}
+.col {
+  display: inline-block;
+  height: 1.2em;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.col + .col {
+  margin-left: -0.25em;
+}
+.reel {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.9s var(--ease-out);
+}
+.reel span {
+  height: 1.2em;
+  line-height: 1.2;
+}
+.sep {
+  margin: 0 0.1em;
+}

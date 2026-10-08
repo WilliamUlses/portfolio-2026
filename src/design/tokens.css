@@ -1,0 +1,60 @@
+/* Design system tokens */
+@theme {
+  /* Shared tokens */
+  --color-ink: #0e0e10;
+  --color-paper: #f2f1ec;
+
+  /* Storefront brand colors */
+  --color-cobalt: #1e2bff;
+  --color-frame: #e4e2da;
+  --color-light-cyan: #9ff3ff;
+  --color-light-pink: #ff7ad9;
+
+  --font-display: var(--font-archivo), "Archivo", system-ui, sans-serif;
+
+  /* Typography scale */
+  --text-hero: 14.6vw;
+  --text-wordmark: 15.4vw;
+  --text-year: 13vw;
+  --text-num: 10vw;
+  --text-list: 5.6vw;
+  --text-h2: clamp(34px, 5.2vw, 84px);
+  --text-statement: clamp(26px, 3.3vw, 56px);
+  --text-sub: clamp(22px, 3vw, 52px);
+  --text-h4: 2.6vw;
+  --text-nav: clamp(14px, 1.15vw, 19px);
+  --text-body: clamp(15px, 1.15vw, 19px);
+  --text-label: clamp(13px, 1vw, 17px);
+  --text-micro: clamp(12px, 0.9vw, 15px);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --radius-glass: 12px;
+
+  /* Admin dark theme */
+  --color-ink-2: #1a1816;
+  --color-line: #2b2825;
+  --color-mute: #8c857c;
+  --color-signal: #ff4a1c;
+  --color-glow: #ffb08a;
+
+  --font-sans:
+    var(--font-schibsted), "Schibsted Grotesk", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+/* Storefront spacing and opacity variables */
+:root {
+  --pad: 2.4vw;
+  --ink-60: rgb(14 14 16 / 0.6);
+  --ink-15: rgb(14 14 16 / 0.15);
+  --paper-60: rgb(242 241 236 / 0.6);
+  --paper-25: rgb(242 241 236 / 0.25);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --pad: 5vw;
+  }
+}
